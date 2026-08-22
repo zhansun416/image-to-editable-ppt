@@ -38,6 +38,8 @@ Optional flags are `--with-ocr`, `--with-inpaint`, and `--skip-node`. The small 
 - Python 3.10+ only for optional OCR or background-repair extras.
 - MathType plus Word/WPS is optional and never installed by this project. Its editable OLE workflow is Windows-specific.
 
+For PNG render output on Windows, install Poppler with `winget install --exact --id oschwartz10612.Poppler`. The renderer also detects the standard Winget installation location when a running terminal has not yet reloaded its PATH.
+
 See [platform support](docs/platform-support.md) for the OS capability matrix and macOS setup notes.
 
 For Windows formula export, set `MATHTYPE_WORD_WPS_TOOL` to a compatible local MathType bridge script, then run `skills/image-to-editable-ppt/scripts/prepare-formula.ps1`. The project stores MTEF/MathML alongside an EMF/WMF fallback; it does not install proprietary MathType or Word/WPS. On macOS, preserve MathML/LaTeX source and use an SVG/PDF/EMF-compatible vector fallback; do not promise a MathType OLE object.

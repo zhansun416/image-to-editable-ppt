@@ -21,6 +21,8 @@
 
 LibreOffice is used only to generate preview artifacts for quality assurance. The skill creates standard Office Open XML `.pptx` files through PptxGenJS. For an additional visual sign-off, open the finished deck in PowerPoint for Mac if it is available.
 
+On Windows, `winget install --exact --id oschwartz10612.Poppler` installs Poppler. The standard Winget package directory is detected automatically if the active terminal has not reloaded PATH yet.
+
 ## Formula note
 
 MathType OLE automation depends on the Windows Word/WPS integration. On macOS and Linux, preserve the editable equation source (preferably MathML or LaTeX) beside the slide asset and insert a vector fallback. This avoids falsely presenting a raster formula as an editable MathType object.
