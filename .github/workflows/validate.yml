@@ -1,0 +1,25 @@
+name: Validate skill package
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null; $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count) { throw ($_.FullName + ': ' + ($errors | Out-String)) }
+          }
+      - name: Check runtime package manifest
+        shell: pwsh
+        run: Get-Content -Raw skills/image-to-editable-ppt/runtime/package.json | ConvertFrom-Json | Out-Null
+      - name: Check seed SVGs
+        shell: pwsh
+        run: Get-ChildItem skills/image-to-editable-ppt/assets/svg-library-seed/icons -Filter *.svg | ForEach-Object { [xml](Get-Content -Raw $_.FullName) | Out-Null }

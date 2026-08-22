@@ -1,0 +1,6 @@
+interface:
+  display_name: "Image to Editable PPT"
+  short_description: "Rebuild slide images as editable PowerPoint pages"
+  default_prompt: "Use $image-to-editable-ppt to rebuild the supplied slide image as an editable PowerPoint page, reusing a local SVG library first and verifying the rendered result."
+policy:
+  allow_implicit_invocation: true

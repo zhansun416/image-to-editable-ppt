@@ -1,0 +1,9 @@
+{
+  "name": "image-to-editable-ppt-runtime",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local runtime for the image-to-editable-ppt Codex skill.",
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}
