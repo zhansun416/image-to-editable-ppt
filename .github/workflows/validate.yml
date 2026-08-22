@@ -6,9 +6,17 @@ on:
 
 jobs:
   validate:
-    runs-on: windows-latest
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Check PowerShell syntax
         shell: pwsh
         run: |
@@ -20,6 +28,26 @@ jobs:
       - name: Check runtime package manifest
         shell: pwsh
         run: Get-Content -Raw skills/image-to-editable-ppt/runtime/package.json | ConvertFrom-Json | Out-Null
+      - name: Check Node runtime scripts
+        shell: pwsh
+        run: |
+          node --check skills/image-to-editable-ppt/scripts/check-env.mjs
+          node --check skills/image-to-editable-ppt/scripts/svg-library.mjs
+          node --check skills/image-to-editable-ppt/scripts/inspect-ppt.mjs
+          node --check skills/image-to-editable-ppt/runtime/build-slide.template.js
       - name: Check seed SVGs
         shell: pwsh
         run: Get-ChildItem skills/image-to-editable-ppt/assets/svg-library-seed/icons -Filter *.svg | ForEach-Object { [xml](Get-Content -Raw $_.FullName) | Out-Null }
+      - name: Exercise cross-platform SVG library
+        shell: pwsh
+        run: |
+          $library = Join-Path $env:RUNNER_TEMP 'i2ep-svg-library'
+          node skills/image-to-editable-ppt/scripts/svg-library.mjs init --library $library
+          node skills/image-to-editable-ppt/scripts/svg-library.mjs find --library $library --query hexagon
+      - name: Check macOS shell scripts
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          bash -n scripts/setup.sh scripts/check-env.sh
+          bash -n skills/image-to-editable-ppt/scripts/setup-dependencies.sh
+          bash -n skills/image-to-editable-ppt/scripts/render-ppt.sh

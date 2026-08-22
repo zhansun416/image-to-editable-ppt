@@ -5,9 +5,9 @@ pptx.layout = 'LAYOUT_WIDE';
 pptx.author = 'image-to-editable-ppt';
 const slide = pptx.addSlide();
 
-// Keep Chinese text in Microsoft YaHei and Latin/English runs in Times New Roman.
+// Keep Latin/English runs in Times New Roman. Use PingFang SC on macOS and Microsoft YaHei elsewhere.
 function addMixedText(value, x, y, w, h, options = {}) {
-  const chineseFace = options.fontFace || 'Microsoft YaHei';
+  const chineseFace = options.fontFace || (process.platform === 'darwin' ? 'PingFang SC' : 'Microsoft YaHei');
   const runs = String(value).split(/([\x00-\x7F]+)/g).filter(Boolean).map(part => ({
     text: part,
     options: { fontFace: /[\x00-\x7F]/.test(part) ? 'Times New Roman' : chineseFace }

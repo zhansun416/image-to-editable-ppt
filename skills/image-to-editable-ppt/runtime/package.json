@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Local runtime for the image-to-editable-ppt Codex skill.",
   "dependencies": {
+    "jszip": "3.10.1",
     "pptxgenjs": "4.0.1"
   }
 }
