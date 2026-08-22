@@ -9,7 +9,8 @@ Rebuild a visual reference as an editable PowerPoint page. Preserve the referenc
 
 ## Setup and local state
 
-- On Windows, run `scripts/check-env.ps1`; on macOS/Linux, run `node scripts/check-env.mjs`. If the core runtime is absent, ask the user to run `scripts/setup-dependencies.ps1` or `scripts/setup-dependencies.sh`; do not install dependencies automatically.
+- Default to the Node.js commands on every platform: `node scripts/check-env.mjs` and, when the user authorizes installation, `node scripts/setup-dependencies.mjs`. Do not install dependencies automatically.
+- PowerShell scripts are Windows compatibility or native-automation adapters, not the normal route. Use `render-ppt.ps1` only when PowerPoint COM is specifically desired; use `prepare-formula.ps1` only for the Windows MathType Word/WPS bridge.
 - `PPTXGENJS_DIST` may override the runtime; otherwise use `runtime/node_modules/pptxgenjs/dist/pptxgen.cjs.js`.
 - The SVG library defaults to `Documents\Codex\svg-library`; set `I2EP_SVG_LIBRARY` to override it. Run `node scripts/svg-library.mjs init` before first use in a new environment.
 - Use `Microsoft YaHei` for Chinese on Windows and `PingFang SC` on macOS, with `Times New Roman` for Latin/English runs. Increase small reference text when needed for readable output.
@@ -27,7 +28,7 @@ Rebuild a visual reference as an editable PowerPoint page. Preserve the referenc
 
 - Write a slide-specific PptxGenJS builder; never use a full-slide screenshot as the normal background.
 - Avoid corrupt PPTX output: six-character colors without `#`, non-negative shape dimensions, and fresh repeated option objects.
-- Run `node scripts/inspect-ppt.mjs <deck.pptx>`. On Windows, render with `scripts/render-ppt.ps1`; on macOS/Linux render with `scripts/render-ppt.sh <deck.pptx> <output-dir>`. Inspect the rendered PNGs or PDF and fix clipping, wrapping, chart labels, icon alignment, and contrast before delivery.
+- Run `node scripts/inspect-ppt.mjs <deck.pptx>` and `node scripts/render-ppt.mjs <deck.pptx> <output-dir>` for standard cross-platform QA. On Windows, `render-ppt.ps1` is an optional PowerPoint-COM alternative for a native PowerPoint render. Inspect the rendered PNGs or PDF and fix clipping, wrapping, chart labels, icon alignment, and contrast before delivery.
 
 ## Boundaries
 

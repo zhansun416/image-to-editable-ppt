@@ -8,29 +8,27 @@ The skill prioritizes native PowerPoint text, shapes, connectors, tables, charts
 
 Installing the Codex skill only copies the skill files. It does **not** run scripts, install packages, download OCR models, access Iconfont, or modify an existing SVG library.
 
-Run the dependency installer explicitly after cloning this repository:
-
-```powershell
-.\scripts\setup.ps1
-```
-
-On macOS or Linux:
+Run the dependency installer explicitly after cloning this repository (the same command on Windows, macOS, and Linux):
 
 ```bash
-./scripts/setup.sh
+node scripts/setup.mjs
 ```
 
-That installs only the core `pptxgenjs` runtime into the skill's own `runtime/node_modules` directory. Optional capabilities remain opt-in:
+Check the environment with:
 
-```powershell
-.\scripts\setup.ps1 -WithOcr
-.\scripts\setup.ps1 -WithInpaint
-.\scripts\setup.ps1 -WithOcr -WithInpaint
+```bash
+node scripts/check-env.mjs
 ```
 
-Run `./scripts/check-env.ps1` to see which local capabilities are available.
+That installs only the core `pptxgenjs` generation runtime and `jszip` PPTX inspector into the skill's own `runtime/node_modules` directory. Optional capabilities remain opt-in:
 
-On macOS/Linux use `./scripts/check-env.sh`. Optional shell flags are `--with-ocr`, `--with-inpaint`, and `--skip-node`.
+```bash
+node scripts/setup.mjs --with-ocr
+node scripts/setup.mjs --with-inpaint
+node scripts/setup.mjs --with-ocr --with-inpaint
+```
+
+Optional flags are `--with-ocr`, `--with-inpaint`, and `--skip-node`. The small `.sh` wrappers are optional conveniences; PowerShell is bundled only for Windows-native PowerPoint COM and MathType/Word/WPS automation.
 
 ## Requirements
 

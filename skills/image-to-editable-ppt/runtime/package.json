@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "description": "Local runtime for the image-to-editable-ppt Codex skill.",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "jszip": "3.10.1",
     "pptxgenjs": "4.0.1"

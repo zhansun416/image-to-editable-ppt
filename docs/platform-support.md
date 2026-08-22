@@ -15,8 +15,8 @@
 ## macOS setup
 
 1. Install Node.js 20 or newer, LibreOffice, and optionally Poppler (`pdftoppm`) using the package manager of your choice.
-2. Clone this repository and run `./scripts/setup.sh`.
-3. Run `./scripts/check-env.sh` to confirm the local render route.
+2. Clone this repository and run `node scripts/setup.mjs`.
+3. Run `node scripts/check-env.mjs` to confirm the local render route.
 4. During reconstruction, run `node scripts/svg-library.mjs init` once to seed the local SVG collection.
 
 LibreOffice is used only to generate preview artifacts for quality assurance. The skill creates standard Office Open XML `.pptx` files through PptxGenJS. For an additional visual sign-off, open the finished deck in PowerPoint for Mac if it is available.

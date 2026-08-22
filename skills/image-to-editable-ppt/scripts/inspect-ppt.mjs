@@ -1,5 +1,12 @@
 import fs from 'node:fs';
-import JSZip from 'jszip';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const skillRoot = path.resolve(scriptDir, '..');
+const require = createRequire(path.join(skillRoot, 'runtime', 'package.json'));
+const JSZip = require('jszip');
 
 const pptx = process.argv[2];
 if (!pptx) throw new Error('Usage: node inspect-ppt.mjs <deck.pptx>');

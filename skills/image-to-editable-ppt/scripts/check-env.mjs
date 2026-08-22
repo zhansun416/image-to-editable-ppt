@@ -12,17 +12,20 @@ const commandExists = (name) => { try { execFileSync(process.platform === 'win32
 const libreOfficePaths = process.platform === 'darwin'
   ? ['/Applications/LibreOffice.app/Contents/MacOS/soffice']
   : process.platform === 'win32' ? ['C:\\Program Files\\LibreOffice\\program\\soffice.exe'] : [];
+const nodeMajor = Number(process.versions.node.split('.')[0]);
 
 console.log(JSON.stringify({
   platform: process.platform,
   node: process.version,
+  nodeSupported: nodeMajor >= 20,
   npm: commandExists('npm'),
-  python3: commandExists(process.platform === 'win32' ? 'python' : 'python3'),
+  python: commandExists(process.platform === 'win32' ? 'python' : 'python3'),
   pptxGenJsDist: runtimeDist,
   pptxGenJsAvailable: fs.existsSync(runtimeDist),
   svgLibrary: svgRoot,
   svgLibraryAvailable: fs.existsSync(svgRoot),
   libreOffice: commandExists('soffice') || libreOfficePaths.some(fs.existsSync),
+  popplerPdftoppm: commandExists('pdftoppm'),
   powerPointCom: process.platform === 'win32',
   macPowerPointManualQa: process.platform === 'darwin'
 }, null, 2));

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-exec "$repo_root/skills/image-to-editable-ppt/scripts/setup-dependencies.sh" "$@"
+exec node "$repo_root/scripts/setup.mjs" "$@"

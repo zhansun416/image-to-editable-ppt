@@ -17,13 +17,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check PowerShell syntax
+      - name: Check Windows-native adapter syntax
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+          @(
+            'skills/image-to-editable-ppt/scripts/render-ppt.ps1',
+            'skills/image-to-editable-ppt/scripts/prepare-formula.ps1'
+          ) | ForEach-Object {
             $tokens = $null; $errors = $null
-            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
-            if ($errors.Count) { throw ($_.FullName + ': ' + ($errors | Out-String)) }
+            [System.Management.Automation.Language.Parser]::ParseFile($_, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count) { throw ($_ + ': ' + ($errors | Out-String)) }
           }
       - name: Check runtime package manifest
         shell: pwsh
@@ -34,6 +37,10 @@ jobs:
           node --check skills/image-to-editable-ppt/scripts/check-env.mjs
           node --check skills/image-to-editable-ppt/scripts/svg-library.mjs
           node --check skills/image-to-editable-ppt/scripts/inspect-ppt.mjs
+          node --check skills/image-to-editable-ppt/scripts/setup-dependencies.mjs
+          node --check skills/image-to-editable-ppt/scripts/render-ppt.mjs
+          node --check scripts/setup.mjs
+          node --check scripts/check-env.mjs
           node --check skills/image-to-editable-ppt/runtime/build-slide.template.js
       - name: Check seed SVGs
         shell: pwsh
