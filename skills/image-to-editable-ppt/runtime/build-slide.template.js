@@ -1,21 +1,41 @@
 // Copy this file into an output folder and adapt it to one reference slide.
-const pptxgen = require('pptxgenjs');
+// Set PPTXGENJS_DIST to this skill's runtime dist when pptxgenjs is not installed in the output project.
+const pptxgen = require(process.env.PPTXGENJS_DIST || 'pptxgenjs');
 const pptx = new pptxgen();
-pptx.layout = 'LAYOUT_WIDE';
+
+// Measure the source image first. Preserve its aspect ratio instead of forcing widescreen.
+const reference = {
+  widthPx: 1600,
+  heightPx: 1000,
+  slideWidthIn: 12,
+  fontFace: 'Aptos', // Replace with the closest available face after visual inspection.
+};
+reference.slideHeightIn = reference.slideWidthIn * reference.heightPx / reference.widthPx;
+pptx.defineLayout({ name: 'REFERENCE_CANVAS', width: reference.slideWidthIn, height: reference.slideHeightIn });
+pptx.layout = 'REFERENCE_CANVAS';
 pptx.author = 'image-to-editable-ppt';
 const slide = pptx.addSlide();
 
-// Keep Latin/English runs in Times New Roman. Use PingFang SC on macOS and Microsoft YaHei elsewhere.
-function addMixedText(value, x, y, w, h, options = {}) {
-  const chineseFace = options.fontFace || (process.platform === 'darwin' ? 'PingFang SC' : 'Microsoft YaHei');
-  const runs = String(value).split(/([\x00-\x7F]+)/g).filter(Boolean).map(part => ({
-    text: part,
-    options: { fontFace: /[\x00-\x7F]/.test(part) ? 'Times New Roman' : chineseFace }
-  }));
-  slide.addText(runs, { x, y, w, h, margin: 0, fontSize: 16, fit: 'shrink', ...options });
+const pxToInX = (px) => px / reference.widthPx * reference.slideWidthIn;
+const pxToInY = (px) => px / reference.heightPx * reference.slideHeightIn;
+const sourceBox = ({ x, y, w, h }) => ({ x: pxToInX(x), y: pxToInY(y), w: pxToInX(w), h: pxToInY(h) });
+
+function addReferenceText(objectName, value, bbox, options = {}) {
+  slide.addText(value, {
+    objectName,
+    ...sourceBox(bbox),
+    margin: 0,
+    fontFace: reference.fontFace,
+    ...options,
+  });
 }
 
-// Add native objects here. Avoid full-slide screenshot backgrounds.
-addMixedText('Editable title', 0.5, 0.4, 8, 0.5, { fontSize: 28, bold: true, color: '005B5E' });
+// Use stable objectName values and mirror them in reconstruction-manifest.json.
+// Preserve the reference's actual font family, weight, spacing, color, alignment, and layer order.
+addReferenceText('title', 'Editable title', { x: 80, y: 55, w: 950, h: 90 }, {
+  fontSize: 28,
+  bold: true,
+  color: '17324D',
+});
 
 pptx.writeFile({ fileName: 'editable-slide.pptx' });

@@ -7,6 +7,8 @@
 | PptxGenJS generation | Supported | Supported | Supported |
 | Persistent local SVG library | Supported | Supported | Supported |
 | PPTX structural inspection | Supported | Supported | Supported |
+| Manifest delivery validation | Supported | Supported | Supported |
+| Visual comparison artifacts | Python + Pillow | Python + Pillow | Python + Pillow |
 | Headless render QA | PowerPoint COM or LibreOffice | LibreOffice | LibreOffice |
 | Per-slide PNG output | PowerPoint COM or LibreOffice + Poppler | LibreOffice + Poppler | LibreOffice + Poppler |
 | MathType Word/WPS OLE | Supported when the user provides the local bridge | Not supported | Not supported |
@@ -19,7 +21,7 @@
 3. Run `node scripts/check-env.mjs` to confirm the local render route.
 4. During reconstruction, run `node scripts/svg-library.mjs init` once to seed the local SVG collection.
 
-LibreOffice is used only to generate preview artifacts for quality assurance. The skill creates standard Office Open XML `.pptx` files through PptxGenJS. For an additional visual sign-off, open the finished deck in PowerPoint for Mac if it is available.
+LibreOffice is used only to generate preview artifacts for quality assurance. The skill creates standard Office Open XML `.pptx` files through PptxGenJS. For an additional visual sign-off, open the finished deck in PowerPoint for Mac if it is available. Font availability differs between LibreOffice and PowerPoint: inspect the actual render and record substitutions rather than relying on the font family declared in OOXML.
 
 On Windows, `winget install --exact --id oschwartz10612.Poppler` installs Poppler. The standard Winget package directory is detected automatically if the active terminal has not reloaded PATH yet.
 

@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0",
+  "deck": {
+    "id": "synthetic-structural-regression",
+    "notes": "Synthetic fixture for tool behavior only; it is not evidence about a user-provided image."
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "canvas": { "widthPx": 1500, "heightPx": 900 },
+      "regions": [
+        {
+          "id": "header-region", "bbox": { "x": 45, "y": 28, "w": 1390, "h": 70 }, "layer": 10, "role": "header", "critical": true,
+          "fidelity": { "status": "verified", "methods": ["render-review"], "notes": "Typography and placement are checked in the rendered fixture." },
+          "elements": [
+            {
+              "id": "header-text", "bbox": { "x": 55, "y": 35, "w": 1380, "h": 56 }, "layer": 10, "role": "title-and-kicker", "expectedEditability": "native",
+              "representation": { "mode": "native-text", "editability": "native" },
+              "objectMap": [{ "name": "header-title", "type": "text" }, { "name": "header-kicker", "type": "text" }],
+              "completion": { "status": "complete", "notes": "Both header text runs are native text boxes." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "Names and text objects are present and visually checked." }
+            }
+          ]
+        },
+        {
+          "id": "process-region", "bbox": { "x": 55, "y": 130, "w": 630, "h": 275 }, "layer": 20, "role": "complex-process-flow", "critical": true,
+          "fidelity": { "status": "verified", "methods": ["render-review", "semantic-flow-review"], "notes": "Node order and arrow direction are checked separately from structural editability." },
+          "elements": [
+            {
+              "id": "process-nodes", "bbox": { "x": 68, "y": 180, "w": 585, "h": 110 }, "layer": 21, "role": "flow-nodes", "expectedEditability": "native",
+              "representation": { "mode": "mixed", "editability": "native" },
+              "objectMap": [
+                { "name": "flow-node-1", "type": "shape" }, { "name": "flow-label-1", "type": "text" },
+                { "name": "flow-node-2", "type": "shape" }, { "name": "flow-label-2", "type": "text" },
+                { "name": "flow-node-3", "type": "shape" }, { "name": "flow-label-3", "type": "text" }
+              ],
+              "completion": { "status": "complete", "notes": "Three nodes are decomposed into native geometry and text." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "All node objects are mapped and checked." }
+            },
+            {
+              "id": "process-lines", "bbox": { "x": 225, "y": 225, "w": 340, "h": 20 }, "layer": 22, "role": "direction-lines", "expectedEditability": "native",
+              "representation": { "mode": "native-line", "editability": "native" },
+              "objectMap": [{ "name": "flow-line-1", "type": "line" }, { "name": "flow-line-2", "type": "line" }],
+              "completion": { "status": "complete", "notes": "Arrows are editable line shapes, not relationship-bound connectors." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "semantic-flow-review"], "notes": "Line type and visual direction are both checked." }
+            },
+            {
+              "id": "process-note", "bbox": { "x": 70, "y": 310, "w": 585, "h": 70 }, "layer": 23, "role": "flow-caption", "expectedEditability": "native",
+              "representation": { "mode": "native-text", "editability": "native" },
+              "objectMap": [{ "name": "flow-note", "type": "text" }],
+              "completion": { "status": "complete", "notes": "Caption is native text." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "Caption is present without clipping." }
+            }
+          ]
+        },
+        {
+          "id": "dense-data-region", "bbox": { "x": 750, "y": 125, "w": 690, "h": 340 }, "layer": 20, "role": "dense-chart-and-table", "critical": true,
+          "fidelity": { "status": "verified", "methods": ["render-review", "data-structure-review"], "notes": "Chart and table are reviewed as separate recoverable structures." },
+          "elements": [
+            {
+              "id": "dense-chart-element", "bbox": { "x": 760, "y": 140, "w": 395, "h": 307 }, "layer": 21, "role": "chart", "expectedEditability": "native",
+              "representation": { "mode": "native-chart", "editability": "native" },
+              "objectMap": [{ "name": "dense-chart", "type": "chart" }],
+              "completion": { "status": "complete", "notes": "Recoverable values use a native chart." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "Chart part and labels are present." }
+            },
+            {
+              "id": "dense-table-element", "bbox": { "x": 1175, "y": 140, "w": 260, "h": 307 }, "layer": 21, "role": "table", "expectedEditability": "native",
+              "representation": { "mode": "native-table", "editability": "native" },
+              "objectMap": [{ "name": "dense-table", "type": "table" }],
+              "completion": { "status": "complete", "notes": "Recoverable rows use a native table." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "Table structure and cell layout are present." }
+            }
+          ]
+        },
+        {
+          "id": "illustration-region", "bbox": { "x": 65, "y": 500, "w": 520, "h": 310 }, "layer": 30, "role": "composite-illustration", "critical": true,
+          "fidelity": { "status": "verified", "methods": ["render-review", "layer-review"], "notes": "Native pieces and the SVG asset are checked as a composite." },
+          "elements": [
+            {
+              "id": "illustration-native-pieces", "bbox": { "x": 80, "y": 515, "w": 410, "h": 285 }, "layer": 31, "role": "decomposed-illustration", "expectedEditability": "native",
+              "representation": { "mode": "mixed", "editability": "native" },
+              "objectMap": [
+                { "name": "illustration-arc", "type": "shape" }, { "name": "illustration-hexagon", "type": "shape" },
+                { "name": "illustration-dot", "type": "shape" }, { "name": "illustration-label", "type": "text" }
+              ],
+              "completion": { "status": "complete", "notes": "Simple pieces are decomposed into editable objects." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "Editable pieces and stacking are checked." }
+            },
+            {
+              "id": "illustration-svg", "bbox": { "x": 455, "y": 585, "w": 110, "h": 110 }, "layer": 32, "role": "decorative-vector-asset", "expectedEditability": "asset",
+              "representation": { "mode": "svg-picture", "editability": "asset" },
+              "assetReason": "The standalone icon is already an intentional vector asset.",
+              "editabilityBoundary": "The SVG picture can be moved or resized but is not claimed as native PowerPoint geometry.",
+              "objectMap": [{ "name": "illustration-svg-asset", "type": "picture-svg" }],
+              "completion": { "status": "complete", "notes": "SVG is retained as a declared vector picture." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "SVG picture type and placement are checked." }
+            }
+          ]
+        },
+        {
+          "id": "overlap-region", "bbox": { "x": 645, "y": 515, "w": 795, "h": 295 }, "layer": 30, "role": "text-image-overlap", "critical": true,
+          "fidelity": { "status": "verified", "methods": ["render-review", "duplicate-text-review"], "notes": "The overlay is checked for stacking and duplicated lettering." },
+          "elements": [
+            {
+              "id": "overlap-native", "bbox": { "x": 650, "y": 525, "w": 785, "h": 270 }, "layer": 31, "role": "panel-and-native-copy", "expectedEditability": "native",
+              "representation": { "mode": "mixed", "editability": "native" },
+              "objectMap": [{ "name": "overlap-panel", "type": "shape" }, { "name": "overlap-title", "type": "text" }, { "name": "overlap-copy", "type": "text" }],
+              "completion": { "status": "complete", "notes": "Panel and copy are native and layered over the asset." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "duplicate-text-review"], "notes": "One copy of each text object is present." }
+            },
+            {
+              "id": "overlap-svg", "bbox": { "x": 1150, "y": 555, "w": 210, "h": 190 }, "layer": 32, "role": "underlay-vector-asset", "expectedEditability": "asset",
+              "representation": { "mode": "svg-picture", "editability": "asset" },
+              "assetReason": "The chart glyph is a decorative source asset rather than recoverable chart data.",
+              "editabilityBoundary": "The SVG remains a picture beneath separately editable native text.",
+              "objectMap": [{ "name": "overlap-svg-asset", "type": "picture-svg" }],
+              "completion": { "status": "complete", "notes": "SVG underlay is retained and declared." },
+              "fidelity": { "status": "verified", "methods": ["structure-readback", "render-review"], "notes": "SVG picture classification and stacking are checked." }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

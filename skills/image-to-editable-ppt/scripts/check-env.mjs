@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
@@ -28,13 +28,17 @@ const libreOfficePaths = process.platform === 'darwin'
   ? ['/Applications/LibreOffice.app/Contents/MacOS/soffice']
   : process.platform === 'win32' ? ['C:\\Program Files\\LibreOffice\\program\\soffice.exe'] : [];
 const nodeMajor = Number(process.versions.node.split('.')[0]);
+const pythonCommand = process.platform === 'win32' ? 'python' : 'python3';
+const pillowAvailable = commandExists(pythonCommand)
+  && spawnSync(pythonCommand, ['-c', 'from PIL import Image; print(Image.__version__)'], { stdio: 'ignore' }).status === 0;
 
 console.log(JSON.stringify({
   platform: process.platform,
   node: process.version,
   nodeSupported: nodeMajor >= 20,
   npm: commandExists('npm'),
-  python: commandExists(process.platform === 'win32' ? 'python' : 'python3'),
+  python: commandExists(pythonCommand),
+  pillowComparison: pillowAvailable,
   pptxGenJsDist: runtimeDist,
   pptxGenJsAvailable: fs.existsSync(runtimeDist),
   svgLibrary: svgRoot,
